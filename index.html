@@ -1,11 +1,86 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ChipLayoutBench: A Multimodal Benchmark for Vision-Language Models in Semiconductor Layout Understanding">
   <title>ChipLayoutBench</title>
+  <style>
+    :root{--accent:#2878b5;--text:#242424;--muted:#666;--line:#ddd;--soft:#f6f7f8}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--text);font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.55;background:#fff}a{color:var(--accent)}.container{width:min(1000px,calc(100% - 36px));margin:0 auto}.hero{text-align:center;padding:64px 0 34px}.hero h1{font-size:clamp(38px,6vw,62px);line-height:1.08;margin:0 0 12px;letter-spacing:-1.5px}.subtitle{font-size:clamp(20px,3vw,30px);line-height:1.25;margin:0 auto 22px;max-width:850px;font-weight:400}.authors{font-size:18px;line-height:1.8}.authors a{text-decoration:none}.affiliations{color:var(--muted);margin:5px auto 20px}.links{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}.button{display:inline-block;color:#fff;background:#333;border-radius:22px;padding:8px 17px;text-decoration:none;font-size:14px}.button:hover{background:var(--accent)}.button.disabled{background:#777;cursor:default}.overview{width:100%;display:block;margin:34px auto 6px}.caption{text-align:center;color:var(--muted);font-size:14px;margin:0 0 44px}.section{padding:28px 0}.section h2{text-align:center;font-size:30px;margin:0 0 20px}.section p{max-width:880px;margin:0 auto 14px;text-align:justify}.categories{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:28px 0}.category{border:1px solid var(--line);border-radius:8px;padding:15px 12px;text-align:center;font-size:14px;background:#fff}.category strong{display:block;margin-bottom:7px;color:#222}.figure{display:block;max-width:100%;margin:24px auto 6px;border:1px solid #eee}.results{overflow-x:auto;margin-top:25px}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}th:first-child,td:first-child{text-align:left}th{background:var(--soft)}tr.best{font-weight:700;background:#f2f7fb}.note{font-size:14px;color:var(--muted);text-align:center!important;margin-top:10px!important}.bibtex{background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:18px;overflow:auto;font:13px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre}.footer{text-align:center;color:#888;font-size:13px;padding:45px 0 35px}.divider{height:1px;background:#eee;margin:20px 0}@media(max-width:760px){.hero{padding-top:42px}.authors{font-size:16px}.categories{grid-template-columns:1fr 1fr}.section p{text-align:left}}@media(max-width:460px){.categories{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
-  <h1>ChipLayoutBench</h1>
-  <p>Project page coming soon.</p>
+  <main class="container">
+    <header class="hero">
+      <h1>ChipLayoutBench</h1>
+      <h2 class="subtitle">A Multimodal Benchmark for Vision-Language Models<br>in Semiconductor Layout Understanding</h2>
+      <div class="authors"><a href="mailto:serimryou@gmail.com">Serim Ryou</a><sup>1</sup>, Jayeon Yoo<sup>1</sup>, Minjae Jeong<sup>2</sup>, Won Hwa Kim<sup>2</sup>, Seong-Jin Park<sup>1</sup></div>
+      <div class="affiliations"><sup>1</sup>AX/PI Center, Samsung Electronics &nbsp; <sup>2</sup>POSTECH</div>
+      <nav class="links" aria-label="Project links">
+        <a class="button" href="https://openreview.net/pdf?id=oQW5fqfPd8">📄 Paper</a>
+        <span class="button disabled" aria-disabled="true">⌘ Code — Coming soon</span>
+        <a class="button" href="#results">🏆 Results</a>
+        <a class="button" href="#citation">✎ Citation</a>
+      </nav>
+      <img class="overview" src="assets/benchmark-overview.png" alt="Representative ChipLayoutBench tasks showing rendered layouts, GDS text, questions, and answers">
+      <p class="caption">ChipLayoutBench evaluates exact geometric reasoning and fine-grained multimodal grounding over semiconductor layouts.</p>
+    </header>
+
+    <section class="section" id="abstract">
+      <h2>Abstract</h2>
+      <p>Recent multimodal benchmarks have significantly expanded the evaluation of visual reasoning in vision-language models, but they primarily focus on holistic semantic understanding. Engineering problems can instead require models to connect visual regions with exact coordinate-level representations and reason over precise quantities.</p>
+      <p>We introduce <strong>ChipLayoutBench</strong>, the first benchmark for general semiconductor layout understanding, with text-only, image+metadata, and multimodal settings across diverse reasoning and grounding tasks. Evaluations of eight recent VLMs show that combining both modalities benefits some models but does not consistently outperform text alone. Dedicated VLM-specific tasks further reveal persistent difficulties with precise multimodal grounding.</p>
+    </section>
+
+    <section class="section" id="benchmark">
+      <h2>Benchmark</h2>
+      <p>Questions are generated from real layouts using predefined templates and deterministic geometric computations. Most ground-truth answers are code-verified; shape-related questions are manually inspected.</p>
+      <div class="categories">
+        <div class="category"><strong>Recognition & Description</strong>Counting and polygon attributes</div>
+        <div class="category"><strong>Localization & Retrieval</strong>Position, pattern, and similarity</div>
+        <div class="category"><strong>Geometric & Spatial</strong>Measures, topology, and layers</div>
+        <div class="category"><strong>Layout Tasks</strong>DRC and hotspot detection</div>
+        <div class="category"><strong>VLM-specific</strong>Cross-modal alignment</div>
+      </div>
+      <img class="figure" src="assets/QA-generation.png" alt="ChipLayoutBench question and answer construction process">
+      <p class="caption">Question-answer construction pipeline.</p>
+    </section>
+
+    <section class="section" id="results">
+      <h2>Results</h2>
+      <p>Text-based representations achieve the strongest overall performance. Image-only inputs are substantially harder, and adding the image does not consistently improve performance—even for questions where visual cues should be useful.</p>
+      <div class="results">
+        <table>
+          <thead><tr><th>Model</th><th>Text</th><th>Image</th><th>Both</th></tr></thead>
+          <tbody>
+            <tr><td>Qwen3.5-27B</td><td>76.8</td><td>35.7</td><td>71.3</td></tr>
+            <tr><td>Qwen3.6-27B</td><td>76.5</td><td>36.1</td><td>73.8</td></tr>
+            <tr><td>Gemma4-31B-Instruct</td><td>77.1</td><td>31.5</td><td>72.7</td></tr>
+            <tr><td>GLM-4.6V</td><td>51.0</td><td>21.8</td><td>58.3</td></tr>
+            <tr><td>InternVL3.5-241B-A28B</td><td>41.2</td><td>20.2</td><td>37.1</td></tr>
+            <tr class="best"><td>Qwen3.5-397B-A17B</td><td>77.4</td><td>39.0</td><td>75.2</td></tr>
+            <tr><td>GPT5.4-mini</td><td>45.5</td><td>32.8</td><td>37.9</td></tr>
+            <tr><td>Gemini3.1-flash-lite</td><td>69.9</td><td>35.1</td><td>65.6</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Average benchmark score by input modality. Higher is better.</p>
+    </section>
+
+    <section class="section" id="citation">
+      <h2>Citation</h2>
+      <pre class="bibtex">@inproceedings{ryou2026chiplayoutbench,
+  title     = {ChipLayoutBench: A Multimodal Benchmark for Vision-Language Models in Semiconductor Layout Understanding},
+  author    = {Ryou, Serim and Yoo, Jayeon and Jeong, Minjae and Kim, Won Hwa and Park, Seong-Jin},
+  booktitle = {Findings of the Association for Computational Linguistics: EMNLP 2026},
+  year      = {2026},
+  url       = {https://openreview.net/forum?id=oQW5fqfPd8}
+}</pre>
+    </section>
+
+    <div class="divider"></div>
+    <footer class="footer">ChipLayoutBench · 2026</footer>
+  </main>
 </body>
 </html>
